@@ -1,9 +1,9 @@
 from flask import Flask
 
-from src.auth import auth
-from src.admin import admins
-from src.clients import clients
-from src.readers import readers
+from src.Blueprints.auth import auth
+from src.Blueprints.admin import admins
+from src.Blueprints.clients import clients
+from src.Blueprints.readers import readers
 
 
 def create_app():
