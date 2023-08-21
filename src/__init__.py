@@ -3,7 +3,6 @@ from flask import Flask, redirect, url_for
 
 from src.Blueprints.auth import auth
 from src.Blueprints.admin import admin
-from src.Blueprints.clients import clients
 from src.Blueprints.readers import readers
 
 from src.models import db
@@ -26,7 +25,6 @@ def create_app(test_config=None):
 
     app.register_blueprint(auth)
     app.register_blueprint(admin)
-    app.register_blueprint(clients)
     app.register_blueprint(readers)
 
     @app.route("/")
