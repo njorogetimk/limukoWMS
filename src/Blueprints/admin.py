@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 
-from src.models import Admin, Client, Reader, db
+from src.models import Admin, Client, Reader, Bill, db
 
 
 admin = Blueprint("admin", __name__, url_prefix="/admin/v1")
@@ -81,3 +81,11 @@ def delete_user(role, id):
 
     else:
         return redirect(url_for("admin.get_admin_readers"))
+
+
+@admin.route("/client-bills/<int:id>")
+def get_client_bills(id):
+    client = Client.query.get_or_404(id)
+    bills = Bill.query.filter_by(client_id=id).all()
+
+    return render_template("client_bills.html", bills=bills, client=client)
