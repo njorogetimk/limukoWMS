@@ -1,0 +1,26 @@
+.container {
+    max-width: 650px;
+    margin: 1rem auto;
+    overflow: auto;
+    padding: 0 2rem;
+}
+
+nav {
+    background-color: #26a69a;
+}
+
+#title { 
+    text-align: center;
+}
+
+img{
+    width: 100%;
+}
+
+.logo {
+    width: 70px;
+    /* display: block; */
+    margin: auto;
+    border-radius: 50%;
+}
+
