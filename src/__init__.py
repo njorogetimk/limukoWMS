@@ -1,5 +1,5 @@
 import os
-from flask import Flask
+from flask import Flask, redirect, url_for
 
 from src.Blueprints.auth import auth
 from src.Blueprints.admin import admin
@@ -28,5 +28,9 @@ def create_app(test_config=None):
     app.register_blueprint(admin)
     app.register_blueprint(clients)
     app.register_blueprint(readers)
+
+    @app.route("/")
+    def main():
+        return redirect(url_for("admin.get_users", role=0))
 
     return app
