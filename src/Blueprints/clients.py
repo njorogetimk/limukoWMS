@@ -11,19 +11,3 @@ def get_clients():
 def get_client(client_id):
 
     return f'<h1>Client {client_id}</h1>'
-
-@clients.route('/add-client')
-def add_client():
-    
-    return f'<h1>Add Client</h1>'
-
-@clients.route('/modify-client/<int:client_id>')
-def modify_client(client_id):
-
-    return f'<h1>Modify Client</h1>'
-
-
-@clients.route('/delete-client/<int:client_id>')
-def delete_client(client_id):
-
-    return f'<h1>Delete Client</h1>'
