@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
 <h2 id="title">Add User</h2>
+
+{% with messages = get_flashed_messages() %} {% if messages %}
+<div>
+  <span class="flash">{{messages[0]}}</span>
+</div>
+{% endif %} {% endwith %}
 <div class="row">
     <form method="POST" class="col s12">
         <div class="row">

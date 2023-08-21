@@ -22,3 +22,10 @@ img{
     border-radius: 50%;
 }
 
+.flash{
+    margin: .5rem;
+    padding: 1rem;
+    border-radius: 4rem;
+    background-color: #01ff01;
+}
+

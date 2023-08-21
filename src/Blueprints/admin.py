@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 
 from src.models import Admin, Client, Reader, Bill, db
 
@@ -63,6 +63,7 @@ def delete_user(role, id):
         admin = Admin.query.get_or_404(id)
         db.session.delete(admin)
         db.session.commit()
+        flash(f"{admin.username} successfully deleted!")
 
         return redirect(url_for("admin.get_admin_readers"))
 
@@ -70,6 +71,7 @@ def delete_user(role, id):
         reader = Reader.query.get_or_404(id)
         db.session.delete(reader)
         db.session.commit()
+        flash(f"{reader.username} successfully deleted!")
 
         return redirect(url_for("admin.get_admin_readers"))
 
@@ -77,6 +79,8 @@ def delete_user(role, id):
         client = Client.query.get_or_404(id)
         db.session.delete(client)
         db.session.commit()
+        flash(f"{client.username} successfully deleted!")
+
         return redirect(url_for("admin.get_clients"))
 
     else:
