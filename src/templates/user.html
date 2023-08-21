@@ -1,0 +1,18 @@
+{% extends 'base.html'%} {% block content %}
+<h4>User {{user.username}}</h4>
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Username</th>
+    <th>Role</th>
+  </tr>
+  <tr>
+    <td>{{user.id}}</td>
+    <td>{{user.username}}</td>
+    <td>
+      {%if user.role==1%} Administrator {% elif user.role == 2%} Meter Reader {%
+      else %} Client {%endif%}
+    </td>
+  </tr>
+</table>
+{% endblock %}
