@@ -1,33 +1,28 @@
-from flask import Blueprint
+from flask import Blueprint, render_template, request, redirect, url_for
 
-readers = Blueprint('readers', __name__, url_prefix='/readers/v1/')
+from src.models import Reader, Client, Bill, db
 
-
-@readers.route('/')
-def get_readers():
-    return '<h1>All readers</h1>'
-
-@readers.route('/reader/<int:reader_id>')
-def get_reader(reader_id):
-
-    return f'<h1>reader {reader_id}</h1>'
-
-@readers.route('/add-reader')
-def add_reader():
-    
-    return f'<h1>Add reader</h1>'
-
-@readers.route('/modify-reader/<int:reader_id>')
-def modify_reader(reader_id):
-
-    return f'<h1>Modify reader</h1>'
+readers = Blueprint("readers", __name__, url_prefix="/readers/v1/")
 
 
-@readers.route('/delete-reader/<int:reader_id>')
-def delete_reader(reader_id):
+@readers.route("/<int:id>/read-meter", methods=["POST", "GET"])
+def read_meter(id):
+    # Reader's id
+    reader = Reader.query.get_or_404(id)
+    # If not reader do nothing
 
-    return f'<h1>Delete reader</h1>'
+    if request.method == "POST":
+        client_id = request.form.get("client_id")
+        current_reading = request.form.get("current_reading")
 
-@readers.route('/read-meter')
-def read_meter():
-    return f'<h1>Read Meter</h1>'
+        client = Client.query.get_or_404(client_id)
+
+        bill = Bill(
+            current_reading=current_reading, client_id=client.id, reader_id=reader.id
+        )
+        db.session.add(bill)
+        db.session.commit()
+
+        return redirect(url_for("readers.read_meter", id=reader.id))
+
+    return render_template("read_meter.html")

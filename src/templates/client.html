@@ -1,0 +1,19 @@
+{% extends 'base.html'%} {% block content %}
+<h4>Client: {{client.username}}</h4>
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Username</th>
+    <th>Bills</th>
+  </tr>
+  <tr>
+    <td>{{client.id}}</td>
+    <td>{{client.username}}</td>
+    <td>
+      <a href="{{url_for('admin.get_client_bills', id=client.id)}}"
+        >View Bills</a
+      >
+    </td>
+  </tr>
+</table>
+{% endblock %}
