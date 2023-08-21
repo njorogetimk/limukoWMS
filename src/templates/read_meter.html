@@ -1,0 +1,33 @@
+{% extends 'base.html' %} {% block content %}
+<h2 id="title">Read Meter</h2>
+<div class="row">
+  <form method="POST" class="col s12">
+    <div class="row">
+      <div class="input-field col s12">
+        <input
+          id="client_id"
+          type="text"
+          class="validate"
+          name="client_id"
+          required
+        />
+        <label for="client_id">Client ID</label>
+      </div>
+      <div class="input-field col s12">
+        <input
+          id="current_reading"
+          type="number"
+          class="validate"
+          name="current_reading"
+          required
+        />
+        <label for="current_reading">Current Reading</label>
+      </div>
+    </div>
+
+    <button class="btn waves-effect waves-light" type="submit" name="action">
+      Submit
+    </button>
+  </form>
+</div>
+{% endblock %}
