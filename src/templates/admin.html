@@ -1,0 +1,10 @@
+{%extends 'base.html'%}
+{%block content%}
+<h1>Admins</h1>
+<!-- Please add a sign to show the admin name -->
+<ul>
+    <li><a href="#">Admins</a></li>
+    <li><a href="{{url_for('readers.get_readers')}}">Meter Reader</a></li>
+    <li><a href="{{url_for('clients.get_clients')}}">Clients</a></li>
+</ul>
+{%endblock%}
