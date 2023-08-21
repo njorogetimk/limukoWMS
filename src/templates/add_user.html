@@ -9,8 +9,13 @@
                 <label for="username">Username</label>
             </div>
             <div class="input-field col s12">
-                <input id="role" type="number" class="validate" name="role" required/>
-                <label for="role">Role</label>
+                <select name="role">
+                    <option value="" disabled selected>Choose the Role</option>
+                    <option value="client" >Client</option>
+                    <option value="reader">Reader</option>
+                    <option value="admin">Admin</option>
+                </select>
+                <label>Select Role</label>
             </div>
             <div class="input-field col s12">
                 <input id="password1" type="password" class="validate" name="password1" required/>

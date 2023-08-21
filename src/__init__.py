@@ -29,6 +29,6 @@ def create_app(test_config=None):
 
     @app.route("/")
     def main():
-        return redirect(url_for("admin.get_users", role=0))
+        return redirect(url_for("admin.get_admin_readers"))
 
     return app
