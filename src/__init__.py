@@ -6,7 +6,7 @@ from src.Blueprints.auth import auth
 from src.Blueprints.admin import admin
 from src.Blueprints.readers import readers
 
-from src.models import db, Admin, Reader
+from src.models import db, Admin, Reader, AnonymousUser
 
 
 def create_app(test_config=None):
@@ -39,6 +39,8 @@ def create_app(test_config=None):
             return Admin.query.get(int(user_id))
         if str(user_id)[0] == "2":
             return Reader.query.get(int(user_id))
+
+    login_manager.anonymous_user = AnonymousUser
 
     @app.route("/")
     def main():

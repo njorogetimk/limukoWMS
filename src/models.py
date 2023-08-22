@@ -1,7 +1,7 @@
 from datetime import datetime
 import random
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import UserMixin
+from flask_login import UserMixin, AnonymousUserMixin
 
 
 db = SQLAlchemy()
@@ -17,8 +17,14 @@ class Admin(UserMixin, db.Model):
         self.username = username
         self.password = password
 
+    def can(self):
+        return True
+
+    def is_admininistator(self):
+        return True
+
     def __repr__(self):
-        return f"<Admin: {self.username}, Role: {self.role}>"
+        return f"<Admin: {self.username}"
 
 
 class Reader(UserMixin, db.Model):
@@ -32,8 +38,14 @@ class Reader(UserMixin, db.Model):
         self.username = username
         self.password = password
 
+    def can(self):
+        return False
+
+    def is_admininistator(self):
+        return False
+
     def __repr__(self):
-        return f"<Reader: {self.username}, Role: {self.role}>"
+        return f"<Reader: {self.username}"
 
 
 class Client(db.Model):
@@ -46,6 +58,12 @@ class Client(db.Model):
         self.id = int("3" + str(random.random())[2:12])
         self.username = username
         self.password = password
+
+    def can(self):
+        return False
+
+    def is_admininistator(self):
+        return False
 
     def __repr__(self):
         return f"<Client: {self.username}>"
@@ -60,3 +78,11 @@ class Bill(db.Model):
 
     def __repr__(self):
         return f"<Bill: {self.current_reading}>"
+
+
+class AnonymousUser(AnonymousUserMixin):
+    def can(self):
+        return False
+
+    def is_administrator(self):
+        False

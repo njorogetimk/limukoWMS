@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required
 
 from src.models import Admin, Client, Reader, Bill, db
+from src.decorators import admin_required
 
 
 admin = Blueprint("admin", __name__, url_prefix="/admin/v1")
@@ -9,6 +10,7 @@ admin = Blueprint("admin", __name__, url_prefix="/admin/v1")
 
 @admin.route("/admin-readers")
 @login_required
+@admin_required
 def get_admin_readers():
     readers = Reader.query.all()
     admins = Admin.query.all()
@@ -18,6 +20,7 @@ def get_admin_readers():
 
 @admin.route("/clients")
 @login_required
+@admin_required
 def get_clients():
     clients = Client.query.all()
 
@@ -26,6 +29,7 @@ def get_clients():
 
 @admin.route("/client/<int:id>")
 @login_required
+@admin_required
 def get_client(id):
     client = Client.query.get_or_404(id)
 
@@ -34,6 +38,7 @@ def get_client(id):
 
 @admin.route("/add-user", methods=["POST", "GET"])
 @login_required
+@admin_required
 def add_user():
     if request.method == "POST":
         username = request.form.get("username")
@@ -64,6 +69,7 @@ def add_user():
 
 @admin.post("/delete/<role>/<int:id>")
 @login_required
+@admin_required
 def delete_user(role, id):
     if role == "admin":
         admin = Admin.query.get_or_404(id)
@@ -95,6 +101,7 @@ def delete_user(role, id):
 
 @admin.route("/client-bills/<int:id>")
 @login_required
+@admin_required
 def get_client_bills(id):
     client = Client.query.get_or_404(id)
     bills = Bill.query.filter_by(client_id=id).all()
