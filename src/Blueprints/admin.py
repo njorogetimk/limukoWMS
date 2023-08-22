@@ -3,6 +3,7 @@ from flask_login import login_required
 
 from src.models import Admin, Client, Reader, Bill, db
 from src.decorators import admin_required
+from src.forms import AddUserForm
 
 
 admin = Blueprint("admin", __name__, url_prefix="/admin/v1")
@@ -40,31 +41,32 @@ def get_client(id):
 @login_required
 @admin_required
 def add_user():
-    if request.method == "POST":
-        username = request.form.get("username")
-        role = request.form.get("role")
-        password1 = request.form.get("password1")
+    form = AddUserForm()
+    if form.validate_on_submit():
+        username = form.username.data
+        role = form.role.data
+        password = form.password.data
 
         if role == "admin":
-            admin = Admin(username=username, password=password1)
+            admin = Admin(username=username, password=password)
             db.session.add(admin)
             db.session.commit()
             return redirect(url_for("admin.get_admin_readers"))
 
         elif role == "reader":
-            reader = Reader(username=username, password=password1)
+            reader = Reader(username=username, password=password)
             db.session.add(reader)
             db.session.commit()
             return redirect(url_for("admin.get_admin_readers"))
 
         else:
-            client = Client(username=username, password=password1)
+            client = Client(username=username, password=password)
             db.session.add(client)
             db.session.commit()
 
             return redirect(url_for("admin.get_clients"))
 
-    return render_template("add_user.html")
+    return render_template("add_user.html", form=form)
 
 
 @admin.post("/delete/<role>/<int:id>")

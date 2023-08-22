@@ -33,3 +33,6 @@ img{
 margin-top: 3rem;
 }
 
+.error>li{
+    color: red;
+}

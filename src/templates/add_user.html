@@ -1,38 +1,32 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 <h2 id="title">Add User</h2>
 
-
-<div class="row">
-    <form method="POST" class="col s12">
-        <div class="row">
-            <div class="input-field col s12">
-                <input id="username" type="text" class="validate" name="username" required />
-                <label for="username">Username</label>
-            </div>
-            <div class="input-field col s12">
-                <select name="role">
-                    <option value="" disabled selected>Choose the Role</option>
-                    <option value="client" >Client</option>
-                    <option value="reader">Reader</option>
-                    <option value="admin">Admin</option>
-                </select>
-                <label>Select Role</label>
-            </div>
-            <div class="input-field col s12">
-                <input id="password1" type="password" class="validate" name="password1" required/>
-                <label for="password1">Password</label>
-            </div>
-            <div class="input-field col s12">
-                <input id="password2" type="password" class="validate" name="password2" required/>
-                <label for="password2">Renter the password</label>
-            </div>
-            
-        </div>
-
-</div>
-<button class="btn waves-effect waves-light" type="submit" name="action">
-    Submit
-</button>
+<form method="post">
+  {{ form.csrf_token }}
+  <div class="row">
+    <div class="input-field col s12">
+      {{form.username()}} {{form.username.label}}
+    </div>
+    <div class="input-field col s12">{{form.role()}} {{form.role.label}}</div>
+    <div class="col s12">
+      {% if form.password.errors %}
+      <ul class="error">
+        {%for error in form.password.errors %}
+        <li>{{error}}</li>
+        {%endfor%}
+      </ul>
+      {% endif %}
+    </div>
+    <div class="input-field col s12">
+      {{form.password()}}{{form.password.label}}
+    </div>
+    <div class="input-field col s12">
+      {{form.verify_password()}}{{form.verify_password.label}}
+    </div>
+    <button class="btn waves-effect waves-light" type="submit" name="action">
+      Submit
+    </button>
+  </div>
 </form>
+
 {% endblock %}
