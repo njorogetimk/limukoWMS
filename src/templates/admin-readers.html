@@ -10,6 +10,7 @@
 <table>
   <tr>
     <th>Username</th>
+    <th>ID</th>
     <th>Role</th>
     <th>Action</th>
   </tr>
@@ -18,6 +19,7 @@
   {% for admin in admins %}
   <tr>
     <td>{{admin.username}}</td>
+    <td>{{admin.id}}</td>
     <td>Administrator</td>
     <td>
       <form
@@ -38,6 +40,7 @@
   {% for reader in readers %}
   <tr>
     <td>{{reader.username}}</td>
+    <td>{{reader.id}}</td>
     <td>Meter Reader</td>
     <td>
       <form

@@ -1,4 +1,5 @@
 from flask import Blueprint, request, redirect, url_for, render_template
+from flask_login import login_user, logout_user
 
 from src.models import Admin, Reader
 
@@ -18,12 +19,16 @@ def login():
             if not admin or password != admin.password:
                 return redirect(url_for("auth.login"))
 
+            login_user(admin)
+
             return redirect(url_for("admin.get_admin_readers"))
 
         if role == "reader":
             reader = Reader.query.filter_by(username=username).first()
             if not reader or password != reader.password:
                 return redirect(url_for("auth.login"))
+
+            login_user(reader)
 
             return redirect(url_for("readers.read_meter", id=reader.id))
 
@@ -32,4 +37,5 @@ def login():
 
 @auth.route("/logout")
 def logout():
-    return f"<h1>logout</h1>"
+    logout_user()
+    return redirect(url_for("auth.login"))
