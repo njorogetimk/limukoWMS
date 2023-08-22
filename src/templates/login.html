@@ -1,36 +1,20 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 <h2 id="title">Login</h2>
-<div class="row">
-    <form method="POST" class="col s12">
-        <div class="row">
-            <div class="input-field col s12">
-                <input id="username" type="text" class="validate" name="username" required />
-                <label for="username">Username</label>
-            </div>
-            <div class="input-field col s12">
-                <select name="role">
-                    <option value="" disabled selected>Choose the Role</option>
-                    <option value="reader">Reader</option>
-                    <option value="admin">Admin</option>
-                </select>
-                <label>Select Role</label>
-            </div>
-            <div class="input-field col s12">
-                <input id="password" type="password" class="validate" name="password" required/>
-                <label for="password">Password</label>
-            </div>
-            <div class="input-field col s12">
-                <label>
-                <input type="checkbox" name="remember">
-                <span>Remember me</span>
-                </label>
-            </div>
-        </div>
 
-</div>
-<button class="btn waves-effect waves-light" type="submit" name="action">
-    Submit
-</button>
+<form method="post">
+  {{ form.csrf_token }}
+  <div class="row">
+    <div class="input-field col s12">
+      {{form.username()}}
+      <label for="username">{{ form.username.label}}</label>
+    </div>
+    <div class="input-field col s12">{{form.role()}} {{form.role.label()}}</div>
+    <div class="input-field col s12">
+      {{form.password()}} {{form.password.label()}}
+    </div>
+    <button class="btn waves-effect waves-light" type="submit" name="action">
+      Submit
+    </button>
+  </div>
 </form>
 {% endblock %}

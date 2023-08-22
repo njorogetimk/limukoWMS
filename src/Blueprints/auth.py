@@ -2,6 +2,7 @@ from flask import Blueprint, request, redirect, url_for, render_template, flash
 from flask_login import login_user, logout_user, login_required
 
 from src.models import Admin, Reader
+from src.forms import LoginForm
 
 
 auth = Blueprint("auth", __name__, url_prefix="/auth/v1/")
@@ -9,11 +10,12 @@ auth = Blueprint("auth", __name__, url_prefix="/auth/v1/")
 
 @auth.route("/login", methods=["GET", "POST"])
 def login():
-    if request.method == "POST":
-        username = request.form.get("username")
-        role = request.form.get("role")
-        password = request.form.get("password")
-        remember = request.form.get("remember") == "on"
+    form = LoginForm()
+    if form.validate_on_submit():
+        username = form.username.data
+        role = form.role.data
+        password = form.password.data
+        remember = form.remember.data
 
         if role == "admin":
             admin = Admin.query.filter_by(username=username).first()
@@ -37,7 +39,7 @@ def login():
 
             return redirect(url_for("readers.read_meter", id=reader.id))
 
-    return render_template("login.html")
+    return render_template("login.html", form=form)
 
 
 @auth.route("/logout")
