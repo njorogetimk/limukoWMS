@@ -38,8 +38,8 @@ def get_client(id):
 
 
 @admin.route("/add-user", methods=["POST", "GET"])
-@login_required
-@admin_required
+# @login_required
+# @admin_required
 def add_user():
     form = AddUserForm()
     if form.validate_on_submit():
