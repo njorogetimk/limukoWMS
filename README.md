@@ -51,15 +51,15 @@ The project as of now is using sqlite, which is initialized as follows
 In the virtual environment run the following commands:
 
 ```bash
-    (venv)$ flask shell
+    flask shell
 ```
 
 ```bash
-    >> from src.models import db, Admin
-    >> db.create_all()
-    >> admin = Admin('admin', '123')
-    >> db.session.add(admin)
-    >> db.session.commit()
+    from src.models import db, Admin
+    db.create_all()
+    admin = Admin('admin', '123')
+    db.session.add(admin)
+    db.session.commit()
 ```
 
 Then build the image and run it as usual.
