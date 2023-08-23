@@ -44,6 +44,26 @@ Also the **is_admin** and **can** functions are added to help in route protectio
 
 _Remember to have all the enviroment variables declared before hand as they are needed in creation of the app_
 
+Also, there's a Dockerfile for those who want to run in on a docker container. Ensure before you build, there's a working database in your container, or your are connected to one.
+
+The project as of now is using sqlite, which is initialized as follows
+
+In the virtual environment run the following commands:
+
+```bash
+    (venv)$ flask shell
+```
+
+```bash
+    >> from src.models import db, Admin
+    >> db.create_all()
+    >> admin = Admin('admin', '123')
+    >> db.session.add(admin)
+    >> db.session.commit()
+```
+
+Then build the image and run it as usual.
+
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first
