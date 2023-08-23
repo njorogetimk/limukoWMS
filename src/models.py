@@ -13,7 +13,7 @@ class Admin(UserMixin, db.Model):
     password = db.Column(db.String(100), nullable=False)
 
     def __init__(self, username, password):
-        self.id = int("1" + str(random.random())[2:12])
+        self.id = int("1" + str(random.random())[2:10])
         self.username = username
         self.password = password
 
@@ -34,7 +34,7 @@ class Reader(UserMixin, db.Model):
     bills = db.relationship("Bill", backref="reader", lazy=True)
 
     def __init__(self, username, password):
-        self.id = int("2" + str(random.random())[2:12])
+        self.id = int("2" + str(random.random())[2:10])
         self.username = username
         self.password = password
 
@@ -55,7 +55,7 @@ class Client(db.Model):
     bills = db.relationship("Bill", backref="client", lazy=True)
 
     def __init__(self, username, password):
-        self.id = int("3" + str(random.random())[2:12])
+        self.id = int("3" + str(random.random())[2:10])
         self.username = username
         self.password = password
 
