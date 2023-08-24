@@ -15,7 +15,6 @@ def login():
         username = form.username.data
         role = form.role.data
         password = form.password.data
-        remember = form.remember.data
 
         if role == "admin":
             admin = Admin.query.filter_by(username=username).first()
@@ -24,7 +23,7 @@ def login():
 
                 return redirect(url_for("auth.login"))
 
-            login_user(admin, remember=remember)
+            login_user(admin)
 
             return redirect(url_for("admin.get_admin_readers"))
 
@@ -35,7 +34,7 @@ def login():
 
                 return redirect(url_for("auth.login"))
 
-            login_user(reader, remember=remember)
+            login_user(reader)
 
             return redirect(url_for("readers.read_meter", id=reader.id))
 
