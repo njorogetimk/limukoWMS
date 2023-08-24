@@ -1,0 +1,38 @@
+.container {
+    margin: 1rem auto;
+    overflow: auto;
+}
+
+nav {
+    background-color: #26a69a;
+}
+
+#title { 
+    text-align: center;
+}
+
+img{
+    width: 100%;
+}
+
+.logo {
+    width: 70px;
+    /* display: block; */
+    margin: auto;
+    border-radius: 50%;
+}
+
+.flash{
+    margin: .5rem;
+    padding: 1rem;
+    border-radius: 4rem;
+    background-color: #01ff01;
+}
+
+.messages{
+margin-top: 3rem;
+}
+
+.error>li{
+    color: red;
+}

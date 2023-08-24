@@ -1,0 +1,60 @@
+{% extends 'base.html'%} {% block content %}
+<h3>Admins</h3>
+
+<table>
+  <tr>
+    <th>Username</th>
+    <th>ID</th>
+    <th>Role</th>
+    <th>Action</th>
+  </tr>
+
+  <!-- Administrators -->
+  {% for admin in admins %}
+  <tr>
+    <td>{{admin.username}}</td>
+    <td>{{admin.id}}</td>
+    <td>Administrator</td>
+    <td>
+      <form
+        action="{{ url_for('admin.delete_user', id=admin.id, role='admin')}}"
+        method="post"
+      >
+        <input
+          type="submit"
+          value="Remove User"
+          onclick="return confirm(' Are you sure you want to delete {{admin.username}}')"
+        />
+      </form>
+    </td>
+  </tr>
+  {%endfor%}
+
+  <!-- Readers -->
+  {% for reader in readers %}
+  <tr>
+    <td>{{reader.username}}</td>
+    <td>{{reader.id}}</td>
+    <td>Meter Reader</td>
+    <td>
+      <form
+        action="{{ url_for('admin.delete_user', id=reader.id, role='reader')}}"
+        method="post"
+      >
+        <input
+          type="submit"
+          value="Remove User"
+          onclick="return confirm(' Are you sure you want to delete {{reader.username}}')"
+        />
+      </form>
+    </td>
+  </tr>
+  {%endfor%}
+</table>
+<button>
+  <a href="{{url_for('admin.get_clients')}}">View Clients</a>
+</button>
+<button class="button">
+  <a href="{{url_for('admin.add_user')}}">Add User</a>
+</button>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %} {% block content %}
+<h2 id="title">Login</h2>
+
+<form method="post">
+  {{ form.csrf_token }}
+  <div class="row">
+    <div class="input-field col s12">
+      {{form.username()}}
+      <label for="username">{{ form.username.label}}</label>
+    </div>
+    <div class="input-field col s12">{{form.role()}} {{form.role.label()}}</div>
+    <div class="input-field col s12">
+      {{form.password()}} {{form.password.label()}}
+    </div>
+    <div class="col s12">
+      <button class="btn waves-effect waves-light" type="submit" name="action">
+        Submit
+      </button>
+    </div>
+  </div>
+</form>
+{% endblock %}
