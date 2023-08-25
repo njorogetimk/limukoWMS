@@ -160,5 +160,5 @@ cython_debug/
 #.idea/
 
 # MY ADDITIONS
-AGILE 1.txt
+AGILE.txt
 .vscode
