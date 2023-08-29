@@ -6,8 +6,9 @@ WORKDIR /app
 COPY ./requirements.txt /app/requirements.txt
 RUN pip install -r requirements.txt
 
-COPY ./.dockerignore /app/.dockerignore
-
 COPY . /app
+
+ENV SQLALCHEMY_DATABASE_URI 'postgresql://postgres:postgres@postgres/limuko'
+ENV SECRET_KEY '123456789'
 
 CMD ["gunicorn", "--config", "gunicorn_config.py", "src:create_app()"]
