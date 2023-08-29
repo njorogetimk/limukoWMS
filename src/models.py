@@ -1,5 +1,6 @@
 from datetime import datetime
 import random
+from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, AnonymousUserMixin
 
@@ -10,12 +11,22 @@ db = SQLAlchemy()
 class Admin(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100), unique=True, nullable=False)
-    password = db.Column(db.String(100), nullable=False)
+    password_hash = db.Column(db.String(128), nullable=False)
 
-    def __init__(self, username, password):
+    def __init__(self, username):
         self.id = int("1" + str(random.random())[2:10])
         self.username = username
-        self.password = password
+
+    @property
+    def password(self):
+        raise AttributeError("Password is Read Only!")
+
+    @password.setter
+    def password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def verify_password(self, plain_text: str):
+        return check_password_hash(self.password_hash, plain_text)
 
     def can(self):
         return True
@@ -30,13 +41,23 @@ class Admin(UserMixin, db.Model):
 class Reader(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100), unique=True, nullable=False)
-    password = db.Column(db.String(100), nullable=False)
+    password_hash = db.Column(db.String(128), nullable=False)
     bills = db.relationship("Bill", backref="reader", lazy=True)
 
     def __init__(self, username, password):
         self.id = int("2" + str(random.random())[2:10])
         self.username = username
-        self.password = password
+
+    @property
+    def password(self):
+        raise AttributeError("Password is Read Only!")
+
+    @password.setter
+    def password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def verify_password(self, plain_text: str):
+        return check_password_hash(self.password_hash, plain_text)
 
     def can(self):
         return False
@@ -51,13 +72,23 @@ class Reader(UserMixin, db.Model):
 class Client(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100), unique=True, nullable=False)
-    password = db.Column(db.String(100), nullable=False)
+    password_hash = db.Column(db.String(128), nullable=False)
     bills = db.relationship("Bill", backref="client", lazy=True)
 
     def __init__(self, username, password):
         self.id = int("3" + str(random.random())[2:10])
         self.username = username
-        self.password = password
+
+    @property
+    def password(self):
+        raise AttributeError("Password is Read Only!")
+
+    @password.setter
+    def password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def verify_password(self, plain_text: str):
+        return check_password_hash(self.password_hash, plain_text)
 
     def can(self):
         return False
