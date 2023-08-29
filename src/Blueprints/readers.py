@@ -17,7 +17,7 @@ def read_meter(id):
         client_id = request.form.get("client_id")
         current_reading = request.form.get("current_reading")
 
-        client = Client.query.get_or_404(client_id)
+        client = Client.query.get_or_404(client_id, description="Wrong client ID")
 
         bill = Bill(
             current_reading=current_reading, client_id=client.id, reader_id=reader.id

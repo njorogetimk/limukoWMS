@@ -1,5 +1,5 @@
 import os
-from flask import Flask, redirect, url_for, render_template
+from flask import Flask, render_template, abort
 from flask_login import LoginManager
 from dotenv import load_dotenv
 
@@ -38,6 +38,10 @@ def create_app():
             return Reader.query.get(int(user_id))
 
     login_manager.anonymous_user = AnonymousUser
+
+    @app.errorhandler(404)
+    def page_not_found(e):
+        return render_template("404.html", error=e), 404
 
     @app.route("/")
     def main():

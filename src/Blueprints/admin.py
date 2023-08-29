@@ -32,7 +32,7 @@ def get_clients():
 @login_required
 @admin_required
 def get_client(id):
-    client = Client.query.get_or_404(id)
+    client = Client.query.get_or_404(id, description="Wrong client ID")
 
     return render_template("client.html", client=client)
 
@@ -93,7 +93,7 @@ def add_user():
 @admin_required
 def delete_user(role, id):
     if role == "admin":
-        admin = Admin.query.get_or_404(id)
+        admin = Admin.query.get_or_404(id, description="Wrong administrator ID")
         db.session.delete(admin)
         db.session.commit()
         flash(f"{admin.username} successfully deleted!")
@@ -101,7 +101,7 @@ def delete_user(role, id):
         return redirect(url_for("admin.get_admin_readers"))
 
     elif role == "reader":
-        reader = Reader.query.get_or_404(id)
+        reader = Reader.query.get_or_404(id, description="Wrong reader ID")
         db.session.delete(reader)
         db.session.commit()
         flash(f"{reader.username} successfully deleted!")
@@ -109,7 +109,7 @@ def delete_user(role, id):
         return redirect(url_for("admin.get_admin_readers"))
 
     elif role == "client":
-        client = Client.query.get_or_404(id)
+        client = Client.query.get_or_404(id, description="Wrong client ID")
         db.session.delete(client)
         db.session.commit()
         flash(f"{client.username} successfully deleted!")
@@ -117,6 +117,7 @@ def delete_user(role, id):
         return redirect(url_for("admin.get_clients"))
 
     else:
+        flash("role does not exist")
         return redirect(url_for("admin.get_admin_readers"))
 
 
