@@ -18,7 +18,7 @@ def login():
 
         if role == "admin":
             admin = Admin.query.filter_by(username=username).first()
-            if not admin or password != admin.password:
+            if not admin or not admin.verify_password(password):
                 flash("Invalid Credentials")
 
                 return redirect(url_for("auth.login"))
@@ -29,7 +29,7 @@ def login():
 
         if role == "reader":
             reader = Reader.query.filter_by(username=username).first()
-            if not reader or password != reader.password:
+            if not reader or reader.verify_password(password):
                 flash("Invalid Credentials")
 
                 return redirect(url_for("auth.login"))

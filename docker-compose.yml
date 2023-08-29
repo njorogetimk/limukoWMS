@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  limukocwms:
+    image: limukocwms:stable
+    ports:
+      - 8000:8000
+
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres
+    ports:
+      - 5432:5432
+
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+volumes:
+  postgres:

@@ -48,19 +48,38 @@ def add_user():
         password = form.password.data
 
         if role == "admin":
-            admin = Admin(username=username, password=password)
+            check_admin = Admin.query.filter_by(username=username).first()
+            if check_admin:
+                flash(f"Admin username {username} taken")
+                return redirect(url_for("admin.add_user"))
+
+            admin = Admin(username=username)
+
+            admin.password = password
             db.session.add(admin)
             db.session.commit()
             return redirect(url_for("admin.get_admin_readers"))
 
         elif role == "reader":
-            reader = Reader(username=username, password=password)
+            check_reader = Reader.query.filter_by(username=username).first()
+            if check_reader:
+                flash(f"Reader username {username} taken")
+                return redirect(url_for("admin.add_user"))
+
+            reader = Reader(username=username)
+            reader.password = password
             db.session.add(reader)
             db.session.commit()
             return redirect(url_for("admin.get_admin_readers"))
 
         else:
-            client = Client(username=username, password=password)
+            check_client = Client.query.filter_by(username=username).first()
+            if check_client:
+                flash(f"Client username {username} taken")
+                return redirect(url_for("admin.add_user"))
+
+            client = Client(username=username)
+            client.password = password
             db.session.add(client)
             db.session.commit()
 
