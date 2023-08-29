@@ -48,19 +48,22 @@ def add_user():
         password = form.password.data
 
         if role == "admin":
-            admin = Admin(username=username, password=password)
+            admin = Admin(username=username)
+            admin.password = password
             db.session.add(admin)
             db.session.commit()
             return redirect(url_for("admin.get_admin_readers"))
 
         elif role == "reader":
-            reader = Reader(username=username, password=password)
+            reader = Reader(username=username)
+            reader.password = password
             db.session.add(reader)
             db.session.commit()
             return redirect(url_for("admin.get_admin_readers"))
 
         else:
-            client = Client(username=username, password=password)
+            client = Client(username=username)
+            client.password = password
             db.session.add(client)
             db.session.commit()
 
