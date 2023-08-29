@@ -44,7 +44,7 @@ class Reader(UserMixin, db.Model):
     password_hash = db.Column(db.String(128), nullable=False)
     bills = db.relationship("Bill", backref="reader", lazy=True)
 
-    def __init__(self, username, password):
+    def __init__(self, username):
         self.id = int("2" + str(random.random())[2:10])
         self.username = username
 
@@ -75,7 +75,7 @@ class Client(db.Model):
     password_hash = db.Column(db.String(128), nullable=False)
     bills = db.relationship("Bill", backref="client", lazy=True)
 
-    def __init__(self, username, password):
+    def __init__(self, username):
         self.id = int("3" + str(random.random())[2:10])
         self.username = username
 
