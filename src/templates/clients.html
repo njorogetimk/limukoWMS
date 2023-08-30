@@ -15,7 +15,7 @@
     <td>{{client.id}}</td>
     <td>
       <form action="{{ url_for('admin.delete_user', id=client.id, role='client')}}" method="post">
-        <input type="submit" value="Remove User"
+        <input {% if not current_user.get_id()==root_id %} disabled {% endif %} type="submit" value="Remove User"
           onclick="return confirm(' Are you sure you want to delete {{client.username}}')" class="btn red" />
       </form>
     </td>

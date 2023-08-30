@@ -1,3 +1,4 @@
+import os
 from flask import Blueprint, render_template
 from flask_login import login_required
 
@@ -14,7 +15,9 @@ client = Blueprint("client", __name__, url_prefix="/client/v1")
 def get_clients():
     clients = Client.query.all()
 
-    return render_template("clients.html", clients=clients)
+    root_id = os.environ.get("ADMIN_ID")
+
+    return render_template("clients.html", clients=clients, root_id=root_id)
 
 
 @client.route("/client/<int:id>")

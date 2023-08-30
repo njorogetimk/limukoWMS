@@ -16,7 +16,7 @@ admin = Blueprint("admin", __name__, url_prefix="/admin/v1")
 def get_admin_readers():
     readers = Reader.query.all()
     admins = Admin.query.all()
-    root_id = int(os.environ.get("ADMIN_ID"))
+    root_id = os.environ.get("ADMIN_ID")
 
     return render_template(
         "admin-readers.html", readers=readers, admins=admins, root_id=root_id
@@ -87,8 +87,8 @@ def add_user():
 @admin_required
 def delete_user(role, id):
     root_id = int(os.environ.get("ADMIN_ID"))
-    if id == root_id or current_user.id != root_id:
-        logout_user()
+    if current_user.id != root_id:
+        flash("Not allowed! Sorry")
         return redirect(url_for("main"))
     if role == "admin":
         admin = Admin.query.get_or_404(id, description="Wrong administrator ID")
