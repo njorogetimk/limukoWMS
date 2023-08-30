@@ -10,27 +10,21 @@
   {% for client in clients %}
   <tr>
     <td>
-      <a href="{{url_for('admin.get_client', id=client.id)}}"
-        >{{client.username}}</a
-      >
+      <a href="{{url_for('client.get_client', id=client.id)}}">{{client.username}}</a>
     </td>
     <td>{{client.id}}</td>
     <td>
-      <form
-        action="{{ url_for('admin.delete_user', id=client.id, role='client')}}"
-        method="post"
-      >
-        <input
-          type="submit"
-          value="Remove User"
-          onclick="return confirm(' Are you sure you want to delete {{client.username}}')"
-        />
+      <form action="{{ url_for('admin.delete_user', id=client.id, role='client')}}" method="post">
+        <input {% if not current_user.get_id()==root_id %} disabled {% endif %} type="submit" value="Remove User"
+          onclick="return confirm(' Are you sure you want to delete {{client.username}}')" class="btn red" />
       </form>
     </td>
   </tr>
   {%endfor%}
 </table>
-<button class="button">
+{% if current_user.is_administrator()%}
+<button class="btn">
   <a href="{{url_for('admin.add_user')}}">Add Client</a>
 </button>
+{% endif %}
 {% endblock %}

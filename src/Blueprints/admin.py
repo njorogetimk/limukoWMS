@@ -1,7 +1,8 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
-from flask_login import login_required
+import os
+from flask import Blueprint, render_template, redirect, url_for, flash
+from flask_login import login_required, logout_user, current_user
 
-from src.models import Admin, Client, Reader, Bill, db
+from src.models import Admin, Client, Reader, db
 from src.decorators import admin_required
 from src.forms import AddUserForm
 
@@ -15,31 +16,24 @@ admin = Blueprint("admin", __name__, url_prefix="/admin/v1")
 def get_admin_readers():
     readers = Reader.query.all()
     admins = Admin.query.all()
+    root_id = os.environ.get("ROOT_ID")
 
-    return render_template("admin-readers.html", readers=readers, admins=admins)
+    return render_template(
+        "admin-readers.html", readers=readers, admins=admins, root_id=root_id
+    )
 
 
-@admin.route("/clients")
+@admin.route("/reader/<int:id>")
 @login_required
 @admin_required
-def get_clients():
-    clients = Client.query.all()
-
-    return render_template("clients.html", clients=clients)
-
-
-@admin.route("/client/<int:id>")
-@login_required
-@admin_required
-def get_client(id):
-    client = Client.query.get_or_404(id, description="Wrong client ID")
-
-    return render_template("client.html", client=client)
+def get_reader(id):
+    reader = Reader.query.get_or_404(id)
+    return render_template("reader.html", reader=reader)
 
 
 @admin.route("/add-user", methods=["POST", "GET"])
-# @login_required
-# @admin_required
+@login_required
+@admin_required
 def add_user():
     form = AddUserForm()
     if form.validate_on_submit():
@@ -83,7 +77,7 @@ def add_user():
             db.session.add(client)
             db.session.commit()
 
-            return redirect(url_for("admin.get_clients"))
+            return redirect(url_for("client.get_clients"))
 
     return render_template("add_user.html", form=form)
 
@@ -92,6 +86,10 @@ def add_user():
 @login_required
 @admin_required
 def delete_user(role, id):
+    root_id = os.environ.get("ROOT_ID")
+    if current_user.get_id() != root_id:
+        flash("Not allowed! Sorry")
+        return redirect(url_for("main"))
     if role == "admin":
         admin = Admin.query.get_or_404(id, description="Wrong administrator ID")
         db.session.delete(admin)
@@ -114,18 +112,8 @@ def delete_user(role, id):
         db.session.commit()
         flash(f"{client.username} successfully deleted!")
 
-        return redirect(url_for("admin.get_clients"))
+        return redirect(url_for("client.get_clients"))
 
     else:
         flash("role does not exist")
         return redirect(url_for("admin.get_admin_readers"))
-
-
-@admin.route("/client-bills/<int:id>")
-@login_required
-@admin_required
-def get_client_bills(id):
-    client = Client.query.get_or_404(id)
-    bills = Bill.query.filter_by(client_id=id).all()
-
-    return render_template("client_bills.html", bills=bills, client=client)

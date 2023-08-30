@@ -2,12 +2,14 @@ from flask import Blueprint, render_template, request, redirect, url_for
 from flask_login import login_required
 
 from src.models import Reader, Client, Bill, db
+from src.decorators import red_required
 
 readers = Blueprint("readers", __name__, url_prefix="/readers/v1/")
 
 
 @readers.route("/<int:id>/read-meter", methods=["POST", "GET"])
 @login_required
+@red_required
 def read_meter(id):
     # Reader's id
     reader = Reader.query.get_or_404(id)
