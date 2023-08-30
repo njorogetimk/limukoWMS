@@ -28,10 +28,7 @@ class Admin(UserMixin, db.Model):
     def verify_password(self, plain_text: str):
         return check_password_hash(self.password_hash, plain_text)
 
-    def can(self):
-        return True
-
-    def is_admininistrator(self):
+    def is_administrator(self):
         return True
 
     def is_adred(self):
@@ -67,10 +64,7 @@ class Reader(UserMixin, db.Model):
     def verify_password(self, plain_text: str):
         return check_password_hash(self.password_hash, plain_text)
 
-    def can(self):
-        return False
-
-    def is_admininistrator(self):
+    def is_administrator(self):
         return False
 
     def is_adred(self):
@@ -106,10 +100,7 @@ class Client(db.Model):
     def verify_password(self, plain_text: str):
         return check_password_hash(self.password_hash, plain_text)
 
-    def can(self):
-        return False
-
-    def is_admininistrator(self):
+    def is_administrator(self):
         return False
 
     def is_adred(self):
