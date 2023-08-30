@@ -1,5 +1,6 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
-from flask_login import login_required
+import os
+from flask import Blueprint, render_template, redirect, url_for, flash
+from flask_login import login_required, logout_user
 
 from src.models import Admin, Client, Reader, Bill, db
 from src.decorators import admin_required
@@ -15,8 +16,11 @@ admin = Blueprint("admin", __name__, url_prefix="/admin/v1")
 def get_admin_readers():
     readers = Reader.query.all()
     admins = Admin.query.all()
+    root_id = int(os.environ.get("ADMIN_ID"))
 
-    return render_template("admin-readers.html", readers=readers, admins=admins)
+    return render_template(
+        "admin-readers.html", readers=readers, admins=admins, root_id=root_id
+    )
 
 
 @admin.route("/clients")
@@ -92,6 +96,10 @@ def add_user():
 @login_required
 @admin_required
 def delete_user(role, id):
+    root_id = int(os.environ.get("ADMIN_ID"))
+    if id == root_id:
+        logout_user()
+        return redirect(url_for("main"))
     if role == "admin":
         admin = Admin.query.get_or_404(id, description="Wrong administrator ID")
         db.session.delete(admin)
