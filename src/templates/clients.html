@@ -24,13 +24,14 @@
           type="submit"
           value="Remove User"
           onclick="return confirm(' Are you sure you want to delete {{client.username}}')"
+          class="btn red"
         />
       </form>
     </td>
   </tr>
   {%endfor%}
 </table>
-<button class="button">
+<button class="btn">
   <a href="{{url_for('admin.add_user')}}">Add Client</a>
 </button>
 {% endblock %}
