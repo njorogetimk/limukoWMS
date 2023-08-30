@@ -43,11 +43,14 @@
 
     <ul class="sidenav" id="mobile-demo">
       <li><a href="{{url_for('main')}}">Home</a></li>
-      {% if current_user.is_authenticated %} {% if current_user.get_id()[0] ==
-      '1'%}
+      {% if current_user.is_authenticated %} {% if
+      current_user.is_admininistrator()%}
       <li>
         <a href="{{url_for('admin.get_admin_readers')}}">Administrators</a>
       </li>
+      <li><a href="{{url_for('client.get_clients')}}">Clients</a></li>
+      <li><a href="{{url_for('auth.logout')}}">Log Out</a></li>
+      {% elif current_user.is_adred%}
       <li><a href="{{url_for('client.get_clients')}}">Clients</a></li>
       <li><a href="{{url_for('auth.logout')}}">Log Out</a></li>
       {%else%}
