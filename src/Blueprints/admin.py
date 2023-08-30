@@ -1,8 +1,8 @@
 import os
 from flask import Blueprint, render_template, redirect, url_for, flash
-from flask_login import login_required, logout_user
+from flask_login import login_required, logout_user, current_user
 
-from src.models import Admin, Client, Reader, Bill, db
+from src.models import Admin, Client, Reader, db
 from src.decorators import admin_required
 from src.forms import AddUserForm
 
@@ -105,7 +105,7 @@ def add_user():
 @admin_required
 def delete_user(role, id):
     root_id = int(os.environ.get("ADMIN_ID"))
-    if id == root_id:
+    if id == root_id or current_user.id != root_id:
         logout_user()
         return redirect(url_for("main"))
     if role == "admin":

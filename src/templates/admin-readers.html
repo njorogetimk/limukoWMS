@@ -9,8 +9,9 @@
     <th>Action</th>
   </tr>
 
+  {% if current_user.id == root_id%}
   <!-- Administrators -->
-  {% for admin in admins if admin.id != root_id%}
+  {% for admin in admins %}
   <tr>
     <td>{{admin.username}}</td>
     <td>{{admin.id}}</td>
@@ -23,6 +24,7 @@
     </td>
   </tr>
   {%endfor%}
+  {% endif %}
 
   <!-- Readers -->
   {% for reader in readers %}
