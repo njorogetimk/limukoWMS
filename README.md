@@ -25,7 +25,7 @@ There are 2 main parts:
 
 The previledges of the _admin_ are:
 
-- Add and delete a user (Admin, Reader or Client)
+- Add a user (Admin, Reader or Client)
 - View all clients in the system, plus their bills
 
 ### 2. Meter Reader Section
@@ -38,15 +38,19 @@ The database stores four tables. The **admin**, **reader**, **client** and **bil
 
 The reader and client tables have a relationship with the bill table to store which client the bill belongs to and which user added the bill to the system.
 
-Also the **is_admin** and **can** functions are added to help in route protection.
+Also the **is_administrator**, **is_red** and **is_adred** functions are added to help in route protection; namely administrator only, reader only, and administrator and reader routes respectively.
 
 ## Note
 
 _Remember to have all the enviroment variables declared before hand as they are needed in creation of the app_
 
-Also, there's a Dockerfile for those who want to run in on a docker container. Ensure before you build, there's a working database in your container, or your are connected to one.
+The environment variables needed are:
 
-The project as of now is using sqlite, which is initialized as follows
+1. SQLALCHEMY_DATABASE_URI
+2. SECRET_KEY
+3. ROOT_ADMIN
+
+Initialize the database as follows
 
 In the virtual environment run the following commands:
 
@@ -56,13 +60,21 @@ In the virtual environment run the following commands:
 
 ```bash
     from src.models import db, Admin
+
     db.create_all()
-    admin = Admin('admin', '123')
+
+    admin = Admin('admin')
+    admin.password='123')
+
     db.session.add(admin)
     db.session.commit()
 ```
 
-Then build the image and run it as usual.
+The above initializes the tables in the already created database. Also the root admin is set at this instance. The id of the root admin is set as an environment variable.
+
+Only after all environment variables are set, is when the application can be ran.
+
+There is a Dockerfile and docker-compose file for running the application in a container
 
 ## Contributing
 
