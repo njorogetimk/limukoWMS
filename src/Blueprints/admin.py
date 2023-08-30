@@ -23,6 +23,14 @@ def get_admin_readers():
     )
 
 
+@admin.route("/reader/<int:id>")
+@login_required
+@admin_required
+def get_reader(id):
+    reader = Reader.query.get_or_404(id)
+    return render_template("reader.html", reader=reader)
+
+
 @admin.route("/clients")
 @login_required
 @admin_required
@@ -127,13 +135,3 @@ def delete_user(role, id):
     else:
         flash("role does not exist")
         return redirect(url_for("admin.get_admin_readers"))
-
-
-@admin.route("/client-bills/<int:id>")
-@login_required
-@admin_required
-def get_client_bills(id):
-    client = Client.query.get_or_404(id)
-    bills = Bill.query.filter_by(client_id=id).all()
-
-    return render_template("client_bills.html", bills=bills, client=client)

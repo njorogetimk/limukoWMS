@@ -27,7 +27,7 @@
   <!-- Readers -->
   {% for reader in readers %}
   <tr>
-    <td>{{reader.username}}</td>
+    <td><a href="{{url_for('admin.get_reader', id=reader.id)}}">{{reader.username}}</a></td>
     <td>{{reader.id}}</td>
     <td>Meter Reader</td>
     <td>

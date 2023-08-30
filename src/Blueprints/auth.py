@@ -29,7 +29,7 @@ def login():
 
         if role == "reader":
             reader = Reader.query.filter_by(username=username).first()
-            if not reader or reader.verify_password(password):
+            if not reader or not reader.verify_password(password):
                 flash("Invalid Credentials")
 
                 return redirect(url_for("auth.login"))
