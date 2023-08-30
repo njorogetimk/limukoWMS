@@ -22,7 +22,9 @@
   </tr>
   {%endfor%}
 </table>
+{% if current_user.is_administrator()%}
 <button class="btn">
   <a href="{{url_for('admin.add_user')}}">Add Client</a>
 </button>
+{% endif %}
 {% endblock %}
