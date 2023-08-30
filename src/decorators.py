@@ -7,7 +7,7 @@ def permission_required():
     def decorator(f):
         @wraps(f)
         def decorated_function(*args, **kwargs):
-            if not current_user.is_admininistrator():
+            if not current_user.is_administrator():
                 flash("Please log in as an admin")
                 return redirect(url_for("auth.login"))
             return f(*args, **kwargs)

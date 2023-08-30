@@ -22,7 +22,7 @@
         <ul id="nav-mobile" class="right hide-on-med-and-down">
           <li><a href="{{url_for('main')}}">Home</a></li>
           {% if current_user.is_authenticated %} {% if
-          current_user.is_admininistrator()%}
+          current_user.is_administrator()%}
           <li>
             <a href="{{url_for('admin.get_admin_readers')}}">Administrators</a>
           </li>
@@ -44,7 +44,7 @@
     <ul class="sidenav" id="mobile-demo">
       <li><a href="{{url_for('main')}}">Home</a></li>
       {% if current_user.is_authenticated %} {% if
-      current_user.is_admininistrator()%}
+      current_user.is_administrator()%}
       <li>
         <a href="{{url_for('admin.get_admin_readers')}}">Administrators</a>
       </li>

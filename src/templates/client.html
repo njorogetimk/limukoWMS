@@ -13,7 +13,7 @@
     <td>{{bill.current_reading}}</td>
     <td>{{bill.read_on}}</td>
     <td>
-      {% if current_user.is_admininistrator() %}
+      {% if current_user.is_administrator() %}
       <a href="{{url_for('admin.get_reader', id=bill.reader_id)}}">{{bill.reader_id}}</a>
       {% else %}
       {{bill.reader_id}}
