@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 from src.Blueprints.auth import auth
 from src.Blueprints.admin import admin
 from src.Blueprints.readers import readers
+from src.Blueprints.client import client
 
 from src.models import db, Admin, Reader, AnonymousUser
 
@@ -25,6 +26,7 @@ def create_app():
     app.register_blueprint(auth)
     app.register_blueprint(admin)
     app.register_blueprint(readers)
+    app.register_blueprint(client)
 
     login_manager = LoginManager()
     login_manager.login_view = "auth.login"

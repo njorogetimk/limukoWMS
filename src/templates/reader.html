@@ -12,7 +12,7 @@
     </tr>
     {% for bill in reader.bills %}
     <tr>
-        <td><a href="{{url_for('admin.get_client', id=bill.client_id)}}">{{bill.client_id}}</a></td>
+        <td><a href="{{url_for('client.get_client', id=bill.client_id)}}">{{bill.client_id}}</a></td>
         <td>{{bill.current_reading}}</td>
         <td>{{bill.read_on}}</td>
     </tr>

@@ -31,8 +31,16 @@ class Admin(UserMixin, db.Model):
     def can(self):
         return True
 
-    def is_admininistator(self):
+    def is_admininistrator(self):
         return True
+
+    def is_adred(self):
+        """Either Admin or Reader"""
+        return True
+
+    def is_red(self):
+        """Only a Reader"""
+        return False
 
     def __repr__(self):
         return f"<Admin: {self.username}"
@@ -62,8 +70,16 @@ class Reader(UserMixin, db.Model):
     def can(self):
         return False
 
-    def is_admininistator(self):
+    def is_admininistrator(self):
         return False
+
+    def is_adred(self):
+        """Either Admin or Reader"""
+        return True
+
+    def is_red(self):
+        """Only a Reader"""
+        return True
 
     def __repr__(self):
         return f"<Reader: {self.username}"
@@ -93,7 +109,15 @@ class Client(db.Model):
     def can(self):
         return False
 
-    def is_admininistator(self):
+    def is_admininistrator(self):
+        return False
+
+    def is_adred(self):
+        """Either Admin or Reader"""
+        return False
+
+    def is_red(self):
+        """Only a Reader"""
         return False
 
     def __repr__(self):

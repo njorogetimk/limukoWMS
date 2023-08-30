@@ -31,24 +31,6 @@ def get_reader(id):
     return render_template("reader.html", reader=reader)
 
 
-@admin.route("/clients")
-@login_required
-@admin_required
-def get_clients():
-    clients = Client.query.all()
-
-    return render_template("clients.html", clients=clients)
-
-
-@admin.route("/client/<int:id>")
-@login_required
-@admin_required
-def get_client(id):
-    client = Client.query.get_or_404(id, description="Wrong client ID")
-
-    return render_template("client.html", client=client)
-
-
 @admin.route("/add-user", methods=["POST", "GET"])
 @login_required
 @admin_required
@@ -95,7 +77,7 @@ def add_user():
             db.session.add(client)
             db.session.commit()
 
-            return redirect(url_for("admin.get_clients"))
+            return redirect(url_for("client.get_clients"))
 
     return render_template("add_user.html", form=form)
 
@@ -130,7 +112,7 @@ def delete_user(role, id):
         db.session.commit()
         flash(f"{client.username} successfully deleted!")
 
-        return redirect(url_for("admin.get_clients"))
+        return redirect(url_for("client.get_clients"))
 
     else:
         flash("role does not exist")
