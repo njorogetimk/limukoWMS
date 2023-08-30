@@ -15,7 +15,7 @@ client = Blueprint("client", __name__, url_prefix="/client/v1")
 def get_clients():
     clients = Client.query.all()
 
-    root_id = os.environ.get("ADMIN_ID")
+    root_id = os.environ.get("ROOT_ID")
 
     return render_template("clients.html", clients=clients, root_id=root_id)
 
