@@ -6,6 +6,11 @@ services:
     ports:
       - 8000:8000
 
+    environment:
+      - SQLALCHEMY_DATABASE_URI=postgresql://postgres:postgres@postgres/limuko
+      - SECRET_KEY=HArdtoguessstring
+      - ROOT_ID=118254455
+
     depends_on:
       - postgres
 
