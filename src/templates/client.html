@@ -12,8 +12,19 @@
   <tr>
     <td>{{bill.current_reading}}</td>
     <td>{{bill.read_on}}</td>
-    <td><a href="{{url_for('admin.get_reader', id=bill.reader_id)}}">{{bill.reader_id}}</a></td>
+    <td>
+      {% if current_user.is_admininistrator() %}
+      <a href="{{url_for('admin.get_reader', id=bill.reader_id)}}">{{bill.reader_id}}</a>
+      {% else %}
+      {{bill.reader_id}}
+      {% endif %}
+    </td>
   </tr>
   {% endfor %}
 </table>
+{% if current_user.is_red() %}
+<button class="btn">
+  <a href="{{url_for('readers.read_meter', id=current_user.id)}}">Read Meter</a>
+</button>
+{% endif %}
 {% endblock %}
