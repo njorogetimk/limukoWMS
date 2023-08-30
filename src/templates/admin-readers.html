@@ -9,7 +9,7 @@
     <th>Action</th>
   </tr>
 
-  {% if current_user.id == root_id%}
+  {% if current_user.get_id() == root_id%}
   <!-- Administrators -->
   {% for admin in admins %}
   <tr>
