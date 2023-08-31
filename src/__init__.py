@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 from .Blueprints import auth, admin, readers, client
 
-from src.models import db, Admin, Reader, AnonymousUser
+from .models import db, Admin, Reader, AnonymousUser
 
 
 def create_app():

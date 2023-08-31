@@ -1,8 +1,8 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from flask_login import login_required
 
-from src.models import Reader, Client, Bill, db
-from src.decorators import red_required
+from ..models import Reader, Client, Bill, db
+from ..decorators import red_required
 
 readers = Blueprint("readers", __name__, url_prefix="/readers/v1/")
 

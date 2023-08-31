@@ -2,8 +2,8 @@ import os
 from flask import Blueprint, render_template
 from flask_login import login_required
 
-from src.models import Client
-from src.decorators import adred_required
+from ..models import Client
+from ..decorators import adred_required
 
 
 client = Blueprint("client", __name__, url_prefix="/client/v1")
