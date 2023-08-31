@@ -1,13 +1,11 @@
 import os
-from flask import Flask, redirect, url_for, render_template
+from flask import Flask, render_template
 from flask_login import LoginManager
 from dotenv import load_dotenv
 
-from src.Blueprints.auth import auth
-from src.Blueprints.admin import admin
-from src.Blueprints.readers import readers
+from .Blueprints import auth, admin, readers, client
 
-from src.models import db, Admin, Reader, AnonymousUser
+from .models import db, Admin, Reader, AnonymousUser
 
 
 def create_app():
@@ -25,6 +23,7 @@ def create_app():
     app.register_blueprint(auth)
     app.register_blueprint(admin)
     app.register_blueprint(readers)
+    app.register_blueprint(client)
 
     login_manager = LoginManager()
     login_manager.login_view = "auth.login"
@@ -38,6 +37,10 @@ def create_app():
             return Reader.query.get(int(user_id))
 
     login_manager.anonymous_user = AnonymousUser
+
+    @app.errorhandler(404)
+    def page_not_found(e):
+        return render_template("404.html", error=e), 404
 
     @app.route("/")
     def main():

@@ -1,0 +1,22 @@
+{% extends 'base.html'%}
+{% block title%}{{reader.username}}{%endblock%}
+{% block content %}
+<h4>{{reader.username.capitalize()}}: {{reader.id}}</h4>
+
+<h5>Bills</h5>
+<table>
+    <tr>
+        <th>Client</th>
+        <th>Bill</th>
+        <th>Date</th>
+    </tr>
+    {% for bill in reader.bills %}
+    <tr>
+        <td><a href="{{url_for('client.get_client', id=bill.client_id)}}">{{bill.client_id}}</a></td>
+        <td>{{bill.current_reading}}</td>
+        <td>{{bill.read_on}}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
