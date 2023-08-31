@@ -1,10 +1,10 @@
 import os
 from flask import Blueprint, render_template, redirect, url_for, flash
-from flask_login import login_required, logout_user, current_user
+from flask_login import login_required, current_user
 
-from src.models import Admin, Client, Reader, db
-from src.decorators import admin_required
-from src.forms import AddUserForm
+from ..models import Admin, Client, Reader, db
+from ..decorators import admin_required
+from ..forms import AddUserForm
 
 
 admin = Blueprint("admin", __name__, url_prefix="/admin/v1")

@@ -1,14 +1,11 @@
 import os
-from flask import Flask, render_template, abort
+from flask import Flask, render_template
 from flask_login import LoginManager
 from dotenv import load_dotenv
 
-from src.Blueprints.auth import auth
-from src.Blueprints.admin import admin
-from src.Blueprints.readers import readers
-from src.Blueprints.client import client
+from .Blueprints import auth, admin, readers, client
 
-from src.models import db, Admin, Reader, AnonymousUser
+from .models import db, Admin, Reader, AnonymousUser
 
 
 def create_app():

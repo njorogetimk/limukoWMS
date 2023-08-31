@@ -1,8 +1,8 @@
-from flask import Blueprint, request, redirect, url_for, render_template, flash
+from flask import Blueprint, redirect, url_for, render_template, flash
 from flask_login import login_user, logout_user, login_required
 
-from src.models import Admin, Reader
-from src.forms import LoginForm
+from ..models import Admin, Reader
+from ..forms import LoginForm
 
 
 auth = Blueprint("auth", __name__, url_prefix="/auth/v1/")
