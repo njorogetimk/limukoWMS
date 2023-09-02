@@ -19,7 +19,7 @@ def get_admin_readers():
     root_id = os.environ.get("ROOT_ID")
 
     return render_template(
-        "admin-readers.html", readers=readers, admins=admins, root_id=root_id
+        "admin-readers.html", readers=readers, admins=admins, root_id=int(root_id)
     )
 
 
