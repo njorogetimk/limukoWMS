@@ -16,13 +16,11 @@ class Admin(UserMixin, db.Model):
     ----------
     username: str
         unique username of the admin
+    password_hash: str
+        hashed password
 
     Methods
     ----------
-    password(password)
-        sets passord and makes it read-only
-    verify_passowrd(plain_text: str)
-        verifys a plain text if its the password
     is_administrator()
         checks if the user is an admin
     is_adred()
@@ -35,40 +33,24 @@ class Admin(UserMixin, db.Model):
     username = db.Column(db.String(100), unique=True, nullable=False)
     password_hash = db.Column(db.String(128), nullable=False)
 
-    def __init__(self, username: str) -> None:
+    def __init__(self, username: str, password_hash: str) -> None:
         """
         Parameters
         ---------
         username: str
             the username
+        password_hash: str
+            the hashed password
         id: int
             id initialized randomly whith a 1 at the start
         """
         self.id = int("1" + str(random.random())[2:10])
         self.username = username
+        self.password_hash = password_hash
 
     @property
     def password(self):
         raise AttributeError("Password is Read Only!")
-
-    @password.setter
-    def password(self, password: str) -> None:
-        """
-        Parameters
-        ----------
-        password: str
-            sets the password
-        """
-        self.password_hash = generate_password_hash(password)
-
-    def verify_password(self, plain_text: str) -> bool:
-        """
-        Parameters
-        ----------
-        plain_text: str
-            plain text password supplied
-        """
-        return check_password_hash(self.password_hash, plain_text)
 
     def is_administrator(self) -> bool:
         """
@@ -100,13 +82,11 @@ class Reader(UserMixin, db.Model):
     ----------
     username: str
         unique username of the reader
+    password_hash: str
+        hashed password
 
     Methods
     ----------
-    password(password)
-        sets passord and makes it read-only
-    verify_passowrd(plain_text: str)
-        verifys a plain text if its the password
     is_administrator()
         checks if the user is an admin
     is_adred()
@@ -120,32 +100,14 @@ class Reader(UserMixin, db.Model):
     password_hash = db.Column(db.String(128), nullable=False)
     bills = db.relationship("Bill", backref="reader", lazy=True)
 
-    def __init__(self, username: str) -> None:
+    def __init__(self, username: str, password_hash: str) -> None:
         self.id = int("2" + str(random.random())[2:10])
         self.username = username
+        self.password_hash = password_hash
 
     @property
     def password(self):
         raise AttributeError("Password is Read Only!")
-
-    @password.setter
-    def password(self, password: str) -> None:
-        """
-        Parameters
-        ----------
-        password: str
-            sets the password
-        """
-        self.password_hash = generate_password_hash(password)
-
-    def verify_password(self, plain_text: str) -> bool:
-        """
-        Parameters
-        ----------
-        plain_text: str
-            plain text password supplied
-        """
-        return check_password_hash(self.password_hash, plain_text)
 
     def is_administrator(self) -> bool:
         """
@@ -177,13 +139,11 @@ class Client(db.Model):
     ----------
     username: str
         unique username of the client
+    password_hash: str
+        hashed password
 
     Methods
     ----------
-    password(password)
-        sets passord and makes it read-only
-    verify_passowrd(plain_text: str)
-        verifys a plain text if its the password
     is_administrator()
         checks if the user is an admin
     is_adred()
@@ -197,32 +157,14 @@ class Client(db.Model):
     password_hash = db.Column(db.String(128), nullable=False)
     bills = db.relationship("Bill", backref="client", lazy=True)
 
-    def __init__(self, username: str) -> None:
+    def __init__(self, username: str, password_hash: str) -> None:
         self.id = int("3" + str(random.random())[2:10])
         self.username = username
+        self.password_hash = password_hash
 
     @property
     def password(self):
         raise AttributeError("Password is Read Only!")
-
-    @password.setter
-    def password(self, password: str) -> None:
-        """
-        Parameters
-        ----------
-        password: str
-            sets the password
-        """
-        self.password_hash = generate_password_hash(password)
-
-    def verify_password(self, plain_text: str) -> bool:
-        """
-        Parameters
-        ----------
-        plain_text: str
-            plain text password supplied
-        """
-        return check_password_hash(self.password_hash, plain_text)
 
     def is_administrator(self) -> bool:
         """

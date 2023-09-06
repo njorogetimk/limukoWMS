@@ -1,5 +1,6 @@
 from flask import Blueprint, redirect, url_for, render_template, flash
 from flask_login import login_user, logout_user, login_required
+from werkzeug.security import check_password_hash
 
 from ..models import Admin, Reader
 from ..forms import LoginForm
@@ -18,8 +19,14 @@ def login():
 
         if role == "admin":
             admin = Admin.query.filter_by(username=username).first()
-            if not admin or not admin.verify_password(password):
-                flash("Invalid Credentials")
+            if not admin:
+                flash("Username not found!")
+
+                return redirect(url_for("auth.login"))
+
+            verified = check_password_hash(admin.password_hash, password)
+            if not verified:
+                flash("Wrong password!")
 
                 return redirect(url_for("auth.login"))
 
