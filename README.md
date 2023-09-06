@@ -60,11 +60,13 @@ In the virtual environment run the following commands:
 
 ```bash
     from src.models import db, Admin
+    from werkzeug.security import generate_password_hash
+
 
     db.create_all()
 
-    admin = Admin('admin')
-    admin.password='123')
+    password=generate_password_hash('123')
+    admin = Admin('admin', password)
 
     db.session.add(admin)
     db.session.commit()
