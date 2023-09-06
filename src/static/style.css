@@ -3,7 +3,7 @@
     overflow: auto;
 }
 
-nav {
+nav, .page-footer {
     background-color: #26a69a;
 }
 
@@ -39,4 +39,8 @@ margin-top: 3rem;
 
 .btn>a{
     color: #fff;
+}
+
+.page-footer{
+    margin-top: 2rem;
 }
