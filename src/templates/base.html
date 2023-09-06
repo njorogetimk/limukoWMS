@@ -1,78 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!--Import Google Icon Font-->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
 
-<head>
-  <meta charset="UTF-8" />
-  <!--Import Google Icon Font-->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/static/materialize.min.css" />
+    <link rel="stylesheet" href="/static/style.css" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="/static/materialize.min.css" />
-  <link rel="stylesheet" href="/static/style.css" />
+    <title>{%block title%}{%endblock%}Limuko WMS</title>
+  </head>
 
-  <title>{%block title%}{%endblock%}Limuko WMS</title>
-</head>
+  <body>
+    <div class="container">
+      <nav>
+        <div class="nav-wrapper">
+          <a href="{{url_for('main')}}" class="brand-logo"
+            ><img src="/static/logo.jpg" alt="logo" class="logo"
+          /></a>
+          <a href="#" data-target="mobile-demo" class="sidenav-trigger"
+            ><i class="material-icons">menu</i></a
+          >
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="{{url_for('main')}}">Home</a></li>
+            {% if current_user.is_authenticated %} {% if
+            current_user.is_administrator()%}
+            <li>
+              <a href="{{url_for('admin.get_admin_readers')}}"
+                >Administrators</a
+              >
+            </li>
+            <li><a href="{{url_for('client.get_clients')}}">Clients</a></li>
+            <li><a href="{{url_for('auth.logout')}}">Log Out</a></li>
+            {% elif current_user.is_adred%}
+            <li><a href="{{url_for('client.get_clients')}}">Clients</a></li>
+            <li><a href="{{url_for('auth.logout')}}">Log Out</a></li>
+            {%else%}
+            <li><a href="{{url_for('auth.logout')}}">Log Out</a></li>
 
-<body>
-  <div class="container">
-    <nav>
-      <div class="nav-wrapper">
-        <a href="{{url_for('main')}}" class="brand-logo"><img src="/static/logo.jpg" alt="logo" class="logo" /></a>
-        <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <li><a href="{{url_for('main')}}">Home</a></li>
-          {% if current_user.is_authenticated %} {% if
-          current_user.is_administrator()%}
-          <li>
-            <a href="{{url_for('admin.get_admin_readers')}}">Administrators</a>
-          </li>
-          <li><a href="{{url_for('client.get_clients')}}">Clients</a></li>
-          <li><a href="{{url_for('auth.logout')}}">Log Out</a></li>
-          {% elif current_user.is_adred%}
-          <li><a href="{{url_for('client.get_clients')}}">Clients</a></li>
-          <li><a href="{{url_for('auth.logout')}}">Log Out</a></li>
-          {%else%}
-          <li><a href="{{url_for('auth.logout')}}">Log Out</a></li>
+            {% endif%} {% else %}
+            <li><a href="{{url_for('auth.login')}}">Log In</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </nav>
 
-          {% endif%} {% else %}
-          <li><a href="{{url_for('auth.login')}}">Log In</a></li>
-          {% endif %}
-        </ul>
+      <ul class="sidenav" id="mobile-demo">
+        <li><a href="{{url_for('main')}}">Home</a></li>
+        {% if current_user.is_authenticated %} {% if
+        current_user.is_administrator()%}
+        <li>
+          <a href="{{url_for('admin.get_admin_readers')}}">Administrators</a>
+        </li>
+        <li><a href="{{url_for('client.get_clients')}}">Clients</a></li>
+        <li><a href="{{url_for('auth.logout')}}">Log Out</a></li>
+        {% elif current_user.is_adred%}
+        <li><a href="{{url_for('client.get_clients')}}">Clients</a></li>
+        <li><a href="{{url_for('auth.logout')}}">Log Out</a></li>
+        {%else%}
+        <li><a href="{{url_for('auth.logout')}}">Log Out</a></li>
+
+        {% endif%} {% else %}
+        <li><a href="{{url_for('auth.login')}}">Log In</a></li>
+        {% endif %}
+      </ul>
+
+      <div class="messages">
+        {% with messages = get_flashed_messages() %} {% if messages %}
+        <div>
+          <span class="flash">{{messages[0]}}</span>
+        </div>
+        {% endif %} {% endwith %}
       </div>
-    </nav>
+      {% block content %} {% endblock %}
 
-    <ul class="sidenav" id="mobile-demo">
-      <li><a href="{{url_for('main')}}">Home</a></li>
-      {% if current_user.is_authenticated %} {% if
-      current_user.is_administrator()%}
-      <li>
-        <a href="{{url_for('admin.get_admin_readers')}}">Administrators</a>
-      </li>
-      <li><a href="{{url_for('client.get_clients')}}">Clients</a></li>
-      <li><a href="{{url_for('auth.logout')}}">Log Out</a></li>
-      {% elif current_user.is_adred%}
-      <li><a href="{{url_for('client.get_clients')}}">Clients</a></li>
-      <li><a href="{{url_for('auth.logout')}}">Log Out</a></li>
-      {%else%}
-      <li><a href="{{url_for('auth.logout')}}">Log Out</a></li>
-
-      {% endif%} {% else %}
-      <li><a href="{{url_for('auth.login')}}">Log In</a></li>
-      {% endif %}
-    </ul>
-
-    <div class="messages">
-      {% with messages = get_flashed_messages() %} {% if messages %}
-      <div>
-        <span class="flash">{{messages[0]}}</span>
+      <div class="page-footer">
+        <div class="footer-copyright">
+          <div class="container my-date"></div>
+        </div>
       </div>
-      {% endif %} {% endwith %}
     </div>
-    {% block content %} {% endblock %}
-  </div>
 
-  <script src="/static/materialize.min.js"></script>
-  <script src="/static/main.js"></script>
-</body>
-
+    <script src="/static/materialize.min.js"></script>
+    <script src="/static/main.js"></script>
+  </body>
 </html>
