@@ -2,7 +2,7 @@ version: "3"
 
 services:
   limukocwms:
-    image: njorotetimk/limukocwms:stable
+    image: njorogetimk/limukocwms:stable
     ports:
       - 8000:8000
 
