@@ -1,6 +1,7 @@
 import os
 from flask import Blueprint, render_template, redirect, url_for, flash
 from flask_login import login_required, current_user
+from werkzeug.security import generate_password_hash
 
 from ..models import Admin, Client, Reader, db
 from ..decorators import admin_required
@@ -47,9 +48,9 @@ def add_user():
                 flash(f"Admin username {username} taken")
                 return redirect(url_for("admin.add_user"))
 
-            admin = Admin(username=username)
+            pasw_hash = generate_password_hash(password)
 
-            admin.password = password
+            admin = Admin(username=username, password_hash=pasw_hash)
             db.session.add(admin)
             db.session.commit()
             return redirect(url_for("admin.get_admin_readers"))
@@ -60,8 +61,9 @@ def add_user():
                 flash(f"Reader username {username} taken")
                 return redirect(url_for("admin.add_user"))
 
-            reader = Reader(username=username)
-            reader.password = password
+            pasw_hash = generate_password_hash(password)
+
+            reader = Reader(username=username, password_hash=pasw_hash)
             db.session.add(reader)
             db.session.commit()
             return redirect(url_for("admin.get_admin_readers"))
@@ -72,8 +74,9 @@ def add_user():
                 flash(f"Client username {username} taken")
                 return redirect(url_for("admin.add_user"))
 
-            client = Client(username=username)
-            client.password = password
+            pasw_hash = generate_password_hash(password)
+
+            client = Client(username=username, password_hash=pasw_hash)
             db.session.add(client)
             db.session.commit()
 
