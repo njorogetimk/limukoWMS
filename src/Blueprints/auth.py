@@ -20,7 +20,7 @@ def login():
         if role == "admin":
             admin = Admin.query.filter_by(username=username).first()
             if not admin:
-                flash("Username not found!")
+                flash(f"Username {username}, not found!")
 
                 return redirect(url_for("auth.login"))
 
@@ -36,8 +36,14 @@ def login():
 
         if role == "reader":
             reader = Reader.query.filter_by(username=username).first()
-            if not reader or not reader.verify_password(password):
-                flash("Invalid Credentials")
+            if not reader:
+                flash(f"Username {username}, not found!")
+
+                return redirect(url_for("auth.login"))
+
+            verified = check_password_hash(reader.password_hash, password)
+            if not verified:
+                flash("Wrong password!")
 
                 return redirect(url_for("auth.login"))
 
