@@ -48,7 +48,7 @@ The environment variables needed are:
 
 1. SQLALCHEMY_DATABASE_URI
 2. SECRET_KEY
-3. ROOT_ADMIN
+3. ROOT_ID
 
 Initialize the database as follows
 
@@ -65,7 +65,7 @@ In the virtual environment run the following commands:
 
     db.create_all()
 
-    password=generate_password_hash('123')
+    password = generate_password_hash('123')
     admin = Admin('admin', password)
 
     db.session.add(admin)
