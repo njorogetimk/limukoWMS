@@ -125,7 +125,7 @@ class Reader(UserMixin, db.Model):
         """
         Checks if is a Reader
         """
-        return False
+        return True
 
     def __repr__(self):
         return f"<Reader: {self.username}"
